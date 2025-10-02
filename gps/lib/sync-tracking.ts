@@ -2,7 +2,7 @@ import NetInfo from '@react-native-community/netinfo';
 import { offlineDB } from './offline-tracking';
 
 class SyncService {
-  private autoSyncInterval: NodeJS.Timeout | null = null;
+  private autoSyncInterval: ReturnType<typeof setInterval> | null = null;
   private isOnline: boolean = true;
 
   constructor() {
@@ -49,7 +49,7 @@ class SyncService {
       } else {
         return { success: false, error: result.error || 'Error del servidor' };
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Sync error:', error);
       return { success: false, error: error.message };
     }

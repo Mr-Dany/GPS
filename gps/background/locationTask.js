@@ -12,7 +12,12 @@ async function getAlias(){
 
 async function getDeviceId(){
   // Prefer Android ID; fallback to stable UUID stored
-  const androidId = Application.androidId;
+  let androidId = null;
+  try {
+    androidId = Application.getAndroidId();
+  } catch (error) {
+    androidId = null;
+  }
   if (androidId) return 'AND' + String(androidId).replace(/[^0-9A-Za-z]/g, '').slice(-12);
   let cached = await AsyncStorage.getItem('lm_device_id');
   if (!cached){

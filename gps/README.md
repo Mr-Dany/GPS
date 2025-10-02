@@ -1,50 +1,68 @@
-# Welcome to your Expo app 👋
+# GPS Tracking Application
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a React Native application that tracks GPS location even when offline and syncs data when connectivity is restored.
 
-## Get started
+## Features
 
-1. Install dependencies
+- Real-time GPS tracking
+- Background location tracking
+- Offline data storage
+- Automatic sync when online
+- Manual sync option
 
-   ```bash
+## Setup Instructions
+
+1. Install dependencies:
+   ```
    npm install
    ```
 
-2. Start the app
+2. For Android, make sure you have the required permissions in `app.json`
 
-   ```bash
+3. Replace the API endpoint in `lib/config.js` with your actual endpoint
+
+4. Run the application:
+   ```
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+## Required Permissions
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+The app requires the following permissions:
+- ACCESS_FINE_LOCATION
+- ACCESS_COARSE_LOCATION
+- ACCESS_BACKGROUND_LOCATION (for background tracking)
+- INTERNET
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## API Endpoint
 
-## Get a fresh project
+The app expects a POST endpoint that accepts JSON data in the following format:
 
-When you're ready, run:
-
-```bash
-npm run reset-project
+```json
+{
+  "locations": [
+    {
+      "lm_device_id": "string",
+      "lm_latitude": "string",
+      "lm_longitude": "string",
+      "lm_device_alias": "string",
+      "lm_datetime": "string"
+    }
+  ]
+}
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## File Structure
 
-## Learn more
+- `app/` - Main application screens
+- `lib/` - Core functionality (storage, sync, config)
+- `background/` - Background task implementation
+- `utils/` - Utility functions
+- `components/` - Reusable UI components
 
-To learn more about developing your project with Expo, look at the following resources:
+## How It Works
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+1. The app requests location permissions from the user
+2. Location data is collected and stored locally using AsyncStorage
+3. When online, data is automatically synced to the configured API endpoint
+4. Data that has been successfully synced is marked and not sent again

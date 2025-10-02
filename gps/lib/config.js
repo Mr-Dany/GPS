@@ -1,5 +1,5 @@
 // <- IMPORTANT -> Replace with your real API url
-export const API_URL = "https://YOUR_SERVER_ENDPOINT/ingest/locations"; 
+export const API_URL = "https://your-api-endpoint.com/api/locations"; 
 // The API should accept a JSON array like the example provided by the user.
 export const LOCATION_TASK_NAME = "LOCATION_UPDATES_TASK";
 
